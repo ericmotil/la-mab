@@ -1,0 +1,11 @@
+{
+  "name": "another",
+  "private": true,
+  "dependencies": {
+    "modernizr": "~2.8.1"
+  },
+  "devDependencies": {
+    "three.js": "threejs#*",
+    "threex.cubecamera": "*"
+  }
+}
