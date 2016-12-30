@@ -144,8 +144,8 @@ function init() {
   //
   // ensures both cubes are same size
   var cubeSize = 30;
-  var canvasHeight = 500,
-      canvasWidth = 500;
+  var canvasHeight = 512,
+      canvasWidth = 512;
 
   
   // make canvases
@@ -192,7 +192,7 @@ function init() {
   //
   var img1 = new Image;
   img1.onload = function(){ ctx1.drawImage(img1, 0, 0); };
-  img1.src = 'images/svg-100.svg';
+  img1.src = 'images/cubeFace1.svg';
 
   var img2 = new Image;
   img2.onload = function(){ ctx2.drawImage(img2, 0, 0); };
@@ -204,15 +204,15 @@ function init() {
 
   var img4 = new Image;
   img4.onload = function(){ ctx4.drawImage(img4, 0, 0); };
-  img4.src = 'images/cubeFace4.png';
+  img4.src = 'images/cubeFace4.svg';
 
   var img5 = new Image;
   img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
   img5.src = 'images/cubeFace5.png';
 
   var img6 = new Image;
-  img6.onload = function(){ ctx6.drawImage(img5, 0, 0); };
-  img6.src = 'images/svg-100.svg';
+  img6.onload = function(){ ctx6.drawImage(img6, 0, 0); };
+  img6.src = 'images/cubeFace6.svg';
 
 
 
@@ -346,23 +346,27 @@ function onDocumentMouseDown( event ) {
         switch (index) {
            case 0: 
               console.log('face 1');
-              intersects[0].face.color.setHex(hex);
+              window.open('http://google.com', '_blank', '','');
               break;
            case 1:
               console.log('face 2');
+              window.open('http://google.com', '_blank', '','');
               break;
            case 2:
               console.log('face 3');
+              window.open('http://google.com', '_blank', '','');
               break;
            case 3: 
               console.log('face 4');
+              window.open('http://google.com', '_blank', '','');
               break;
            case 4: 
               console.log('face 5');
-              intersects[0].face.color.setHex(hex);
+              window.open('http://google.com', '_blank', '','');
               break;
            case 5: 
               console.log('face 6');
+              window.open('http://google.com', '_blank', '','');
               break;
         }
 
@@ -434,8 +438,8 @@ function animate() {
   requestAnimationFrame( animate );
   render();
 
-  camera.position.x += ( mouseX / 2  - camera.position.x) * 0.05;
-  camera.position.y += ( - mouseY / 2   - camera.position.y) * 0.05;
+  camera.position.x += ( mouseX / 2  - camera.position.x) * 0.02;
+  camera.position.y += ( - mouseY / 2   - camera.position.y) * 0.02;
 }
 
 
