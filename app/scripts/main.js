@@ -76,7 +76,7 @@ function init() {
 
   // skybox
   //
-  var skyboxImgPath = '/images/bg/';
+  var skyboxImgPath = 'images/bg/';
   var skyboxImgFormat = '.png';
   var skyboxUrls = [
     skyboxImgPath + 'dawnmountain-xpos' + skyboxImgFormat,
@@ -192,27 +192,27 @@ function init() {
   //
   var img1 = new Image;
   img1.onload = function(){ ctx1.drawImage(img1, 0, 0); };
-  img1.src = '/images/svg-100.svg';
+  img1.src = 'images/svg-100.svg';
 
   var img2 = new Image;
   img2.onload = function(){ ctx2.drawImage(img2, 0, 0); };
-  img2.src = '/images/cubeFace2.svg';
+  img2.src = 'images/cubeFace2.svg';
 
   var img3 = new Image;
   img3.onload = function(){ ctx3.drawImage(img3, 0, 0); };
-  img3.src = '/images/cubeFace3.svg';
+  img3.src = 'images/cubeFace3.svg';
 
   var img4 = new Image;
   img4.onload = function(){ ctx4.drawImage(img4, 0, 0); };
-  img4.src = '/images/cubeFace4.png';
+  img4.src = 'images/cubeFace4.png';
 
   var img5 = new Image;
   img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
-  img5.src = '/images/cubeFace5.png';
+  img5.src = 'images/cubeFace5.png';
 
   var img6 = new Image;
   img6.onload = function(){ ctx6.drawImage(img5, 0, 0); };
-  img6.src = '/images/svg-100.svg';
+  img6.src = 'images/svg-100.svg';
 
 
 
@@ -338,7 +338,7 @@ function onDocumentMouseDown( event ) {
   raycaster.set(camera.position, vector.sub( camera.position ).normalize());
 
   var intersects = raycaster.intersectObject( cubeLink );
-
+  
   var hex = Math.random() * 0xffffff;
 
      if ( intersects.length > 0 ) {
