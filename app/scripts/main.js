@@ -1,7 +1,10 @@
 // standard global vars
 var container, scene, camera, renderer, controls, stats;
 
+
+// cubes
 var cube;
+var cubeLink;
 
 
 var targetRotation = 0;
@@ -25,18 +28,6 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
 
-// raycasting experiment
-var raycaster;
-var mouse;
-
-
-// second scene
-
-var scene2;
-var renderer2;
-var div;
-var element;
-
 
 init();
 animate();
@@ -52,17 +43,12 @@ function init() {
   scene = new THREE.Scene();
 
 
-
   // camera
   //
   // view angle, aspect ratio, near, far
   camera = new THREE.PerspectiveCamera( 45, windowWidth / windowHeight, 0.1, 1000 );
   camera.position.set( 100, 100, 100 );
-  // camera.lookAt( scene.position );
   scene.add( camera );
-
-
-
 
 
   // renderer
@@ -75,10 +61,6 @@ function init() {
   container.appendChild( renderer.domElement );
 
 
-
-
-
-
   // lights
   //
   var light = new THREE.PointLight(0xffffff);
@@ -86,35 +68,24 @@ function init() {
   scene.add(light);
 
 
-
-
-
   // axes
   //
-  var axes = new THREE.AxisHelper(100);
-  scene.add( axes );
+  // var axes = new THREE.AxisHelper(100);
+  // scene.add( axes );
 
 
-  
-
-
-
-
-
-  // skybox with environment shader
+  // skybox
   //
   var skyboxImgPath = 'images/bg/';
-  var skyboxImgFormat = '.jpg';
+  var skyboxImgFormat = '.png';
   var skyboxUrls = [
-    skyboxImgPath + 'xpos' + skyboxImgFormat,
-    skyboxImgPath + 'xneg' + skyboxImgFormat,
-    skyboxImgPath + 'ypos' + skyboxImgFormat,
-    skyboxImgPath + 'yneg' + skyboxImgFormat,
-    skyboxImgPath + 'zpos' + skyboxImgFormat,
-    skyboxImgPath + 'zneg' + skyboxImgFormat
+    skyboxImgPath + 'dawnmountain-xpos' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-xneg' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-ypos' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-yneg' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-zpos' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-zneg' + skyboxImgFormat
   ];
-
-
 
 
   // skybox with refraction mapping
@@ -124,8 +95,9 @@ function init() {
   skyboxTexture.mapping = THREE.CubeRefractionMapping;
 
   // skybox geo
-  var skyboxGeometry = new THREE.BoxGeometry( 500, 500, 500 );
+  var skyboxGeometry = new THREE.BoxGeometry( 1000, 1000, 1000 );
 
+  // skybox shader
   var skyboxShader = THREE.ShaderLib[ 'cube' ];
   var skyboxMaterial = new THREE.ShaderMaterial( {
     fragmentShader: skyboxShader.fragmentShader,
@@ -137,6 +109,7 @@ function init() {
   skyboxMaterial.uniforms[ 'tCube' ].value = skyboxTexture;
 
 
+  // make skaybox and add to scene
   var skybox = new THREE.Mesh( skyboxGeometry, skyboxMaterial );
   scene.add( skybox );
 
@@ -145,6 +118,7 @@ function init() {
 
 
   // skybox by mapping sides of cube
+  // doesnt allow for refraction mapping
   //
   // var imagePrefix = 'images/bg/';
   // var directions  = ['xpos', 'xneg', 'ypos', 'yneg', 'zpos', 'zneg'];
@@ -162,48 +136,172 @@ function init() {
   // var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
   // var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
   // scene.add( skyBox );
+  
 
 
 
-
+  // cubes
+  //
+  // ensures both cubes are same size
   var cubeSize = 30;
+  var canvasHeight = 500,
+      canvasWidth = 500;
+
+  
+  // make canvases
+  //
+  var canvas1 = document.createElement('canvas'),
+      canvas2 = document.createElement('canvas'),
+      canvas3 = document.createElement('canvas'),
+      canvas4 = document.createElement('canvas'),
+      canvas5 = document.createElement('canvas'),
+      canvas6 = document.createElement('canvas');
+  
+  // set canvas sizes
+  //
+  canvas1.width = canvasHeight;
+  canvas1.height = canvasWidth;
+
+  canvas2.width = canvasHeight;
+  canvas2.height = canvasWidth;
+
+  canvas3.width = canvasHeight;
+  canvas3.height = canvasWidth;
+
+  canvas4.width = canvasHeight;
+  canvas4.height = canvasWidth;
+
+  canvas5.width = canvasHeight;
+  canvas5.height = canvasWidth;
+
+  canvas6.width = canvasHeight;
+  canvas6.height = canvasWidth;
+
+
+  // make canvas context
+  //
+  var ctx1 = canvas1.getContext('2d'),
+      ctx2 = canvas2.getContext('2d'),
+      ctx3 = canvas3.getContext('2d'),
+      ctx4 = canvas4.getContext('2d'),
+      ctx5 = canvas5.getContext('2d'),
+      ctx6 = canvas6.getContext('2d');
+
+
+  // choose images for different canvases
+  //
+  var img1 = new Image;
+  img1.onload = function(){ ctx1.drawImage(img1, 0, 0); };
+  img1.src = 'images/svg-100.svg';
+
+  var img2 = new Image;
+  img2.onload = function(){ ctx2.drawImage(img2, 0, 0); };
+  img2.src = 'images/cubeFace2.svg';
+
+  var img3 = new Image;
+  img3.onload = function(){ ctx3.drawImage(img3, 0, 0); };
+  img3.src = 'images/cubeFace3.svg';
+
+  var img4 = new Image;
+  img4.onload = function(){ ctx4.drawImage(img4, 0, 0); };
+  img4.src = 'images/cubeFace4.png';
+
+  var img5 = new Image;
+  img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
+  img5.src = 'images/cubeFace5.png';
+
+  var img6 = new Image;
+  img6.onload = function(){ ctx6.drawImage(img5, 0, 0); };
+  img6.src = 'images/svg-100.svg';
+
+
+
+  // make cube faces
+  //
+  var cubeFace1 = new THREE.MeshBasicMaterial({
+    map: new THREE.Texture(canvas1),
+    transparent: true,
+  });
+  cubeFace1.map.needsUpdate = true;
+
+  var cubeFace2 = new THREE.MeshBasicMaterial({
+    map: new THREE.Texture(canvas2),
+    transparent: true,
+  });
+  cubeFace2.map.needsUpdate = true;
+
+  var cubeFace3 = new THREE.MeshBasicMaterial({
+    map: new THREE.Texture(canvas3),
+    transparent: true,
+  });
+  cubeFace3.map.needsUpdate = true;
+
+  var cubeFace4 = new THREE.MeshBasicMaterial({
+    map: new THREE.Texture(canvas4),
+    transparent: true,
+  });
+  cubeFace4.map.needsUpdate = true;
+
+  var cubeFace5 = new THREE.MeshBasicMaterial({
+    map: new THREE.Texture(canvas5),
+    transparent: true,
+  });
+  cubeFace5.map.needsUpdate = true;
+
+  var cubeFace6 = new THREE.MeshBasicMaterial({
+    map: new THREE.Texture(canvas6),
+    transparent: true,
+  });
+  cubeFace6.map.needsUpdate = true;
+
+
+  // cube geometry
+  var cubeLinkGeometry = new THREE.CubeGeometry(cubeSize, cubeSize, cubeSize);
+
+  // compile cube faces
+  var cubeLinkMaterials = [ 
+      cubeFace1,
+      cubeFace2,
+      cubeFace3,
+      cubeFace4,
+      cubeFace5,
+      cubeFace6
+  ]; 
+
+  // make cube
+  var cubeLinkMaterial = new THREE.MultiMaterial(cubeLinkMaterials); 
+  cubeLink = new THREE.Mesh(cubeLinkGeometry, cubeLinkMaterial);
+
+  // add cube to scene
+  scene.add( cubeLink );
+
+  // positon cube in center
+  cubeLink.position.set(0, 0, 0);
+  cubeLink.doubleSided = true;
+
+
+
+  // main refracting cube
+  //
   var cubeGeometry = new THREE.BoxGeometry( cubeSize, cubeSize, cubeSize);
   var cubeMaterial = new THREE.MeshBasicMaterial({
     color: 0xffffff,
     wireframe: false,
+    // map onto cube
     envMap: skyboxTexture,
-    refractionRatio: 0.62
+    // controlls the amount of rrefraction of background
+    // lower more distored, high clearer
+    refractionRatio: 0.85
   });
 
+  // create cube mesh
   cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+  // center
   cube.position.set(0, 0, 0);
+  // add cube to scene
   scene.add( cube );
 
 
-
-    //CSS3D Scene
-    scene2 = new THREE.Scene();
-
-    //HTML
-    element = document.createElement('a');
-    element.href = 'http://google.com';
-    element.innerHTML = 'this is a link';
-    element.className = 'three-div';
-
-    //CSS Object
-    div = new THREE.CSS3DObject(element);
-    div.position.x = 0;
-    div.position.y = 0;
-    div.position.z = -100;
-    // div.rotation.y = Math.PI;
-    scene2.add(div);
-
-    //CSS3D Renderer
-    renderer2 = new THREE.CSS3DRenderer();
-    renderer2.setSize(window.innerWidth, window.innerHeight);
-    renderer2.domElement.style.position = 'absolute';
-    renderer2.domElement.style.top = 0;
-    document.body.appendChild(renderer2.domElement);
 
 
   // event listeners
@@ -214,8 +312,6 @@ function init() {
   document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
 }
-
-
 
 
 window.addEventListener( 'resize', onWindowResize, false );
@@ -229,14 +325,48 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
 
   renderer.setSize( window.innerWidth, window.innerHeight );
-
 }
 
 
 
 
-function onDocumentMouseDown( event ) {
-  event.preventDefault();
+function onDocumentMouseDown( event ) {  
+  var vector = new THREE.Vector3((event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
+  vector.unproject( camera );
+  
+  var raycaster = new THREE.Raycaster();   
+  raycaster.set(camera.position, vector.sub( camera.position ).normalize());
+
+  var intersects = raycaster.intersectObject( cubeLink );
+  
+  var hex = Math.random() * 0xffffff;
+
+     if ( intersects.length > 0 ) {
+        var index = Math.floor( intersects[0].faceIndex / 2);
+        switch (index) {
+           case 0: 
+              console.log('face 1');
+              intersects[0].face.color.setHex(hex);
+              break;
+           case 1:
+              console.log('face 2');
+              break;
+           case 2:
+              console.log('face 3');
+              break;
+           case 3: 
+              console.log('face 4');
+              break;
+           case 4: 
+              console.log('face 5');
+              intersects[0].face.color.setHex(hex);
+              break;
+           case 5: 
+              console.log('face 6');
+              break;
+        }
+
+     }
 
   // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
@@ -246,8 +376,10 @@ function onDocumentMouseDown( event ) {
   mouseYOnMouseDown = event.clientY - windowHalfY;
 
   targetRotationOnMouseDown = targetRotation;
-  targetRotationYOnMouseDown = targetRotationY;
+  targetRotationYOnMouseDown = targetRotationY;  
 }
+
+
 function onDocumentMouseMove( event ) {
 
   mouseX = ( event.clientX - windowHalfX ) * 0.05;
@@ -287,8 +419,8 @@ function onDocumentTouchMove( event ) {
 
 
     // move camera
-    mouseX = ( event.touches[ 0 ].pageX - windowHalfX) * 0.2;
-    mouseY = ( event.touches[ 0 ].pageY - windowHalfY) * 0.2;
+    mouseX = ( event.touches[ 0 ].pageX - windowHalfX) * 0.5;
+    mouseY = ( event.touches[ 0 ].pageY - windowHalfY) * 0.5;
 
     // move object
     targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.2;
@@ -305,20 +437,22 @@ function animate() {
   camera.position.x += ( mouseX / 2  - camera.position.x) * 0.05;
   camera.position.y += ( - mouseY / 2   - camera.position.y) * 0.05;
 }
+
+
 function render() {
 
   renderer.render( scene, camera );
-  renderer2.render(scene2, camera);
+
 
   cube.rotation.x += 0.05;
   cube.rotation.y += 0.05;
 
+  cubeLink.rotation.x += 0.05;
+  cubeLink.rotation.y += 0.05;
+
   cube.rotation.y += ( targetRotationY - cube.rotation.y ) * 0.005;
   cube.rotation.x += ( targetRotation - cube.rotation.x ) * 0.005;
 
-  div.rotation.x += 0.05;
-  div.rotation.y += 0.05;
-
-  div.rotation.y += ( targetRotationY - cube.rotation.y ) * 0.005;
-  div.rotation.x += ( targetRotation - cube.rotation.x ) * 0.005;
+  cubeLink.rotation.y += ( targetRotationY - cubeLink.rotation.y ) * 0.005;
+  cubeLink.rotation.x += ( targetRotation - cubeLink.rotation.x ) * 0.005;
 }
