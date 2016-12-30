@@ -6,6 +6,7 @@ var container, scene, camera, renderer, controls, stats;
 var cube;
 var cubeLink;
 
+var raycaster;
 
 var targetRotation = 0;
 var targetRotationOnMouseDown = 0;
@@ -13,7 +14,7 @@ var targetRotationOnMouseDown = 0;
 var targetRotationY = 0;
 var targetRotationYOnMouseDown = 0;
 
-
+var mouse;
 var mouseX = 0;
 var mouseY = 0;
 var mouseXOnMouseDown = 0;
@@ -208,7 +209,7 @@ function init() {
 
   var img5 = new Image;
   img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
-  img5.src = 'images/cubeFace5.png';
+  img5.src = 'images/cubeFace5.svg';
 
   var img6 = new Image;
   img6.onload = function(){ ctx6.drawImage(img6, 0, 0); };
@@ -301,7 +302,8 @@ function init() {
   // add cube to scene
   scene.add( cube );
 
-
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2();
 
 
   // event listeners
@@ -331,46 +333,90 @@ function onWindowResize() {
 
 
 function onDocumentMouseDown( event ) {  
-  var vector = new THREE.Vector3((event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
-  vector.unproject( camera );
+  // var vector = new THREE.Vector3((event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
+  // vector.unproject( camera );
   
-  var raycaster = new THREE.Raycaster();   
-  raycaster.set(camera.position, vector.sub( camera.position ).normalize());
+  // var raycaster = new THREE.Raycaster();   
+  // // raycaster.set(camera.position, vector.sub( camera.position ).normalize());
+  // raycaster.setFromCamera( mouse, camera );
 
+  // var intersects = raycaster.intersectObject( cubeLink );
+  
+  // var hex = Math.random() * 0xffffff;
+
+  //    if ( intersects.length > 0 ) {
+  //       var index = Math.floor( intersects[0].faceIndex / 2);
+  //       switch (index) {
+  //          case 0: 
+  //             console.log('face 1');
+  //             // window.open('http://google.com', '_blank', '','');
+  //             break;
+  //          case 1:
+  //             console.log('face 2');
+  //             // window.open('http://google.com', '_blank', '','');
+  //             break;
+  //          case 2:
+  //             console.log('face 3');
+  //             // window.open('http://google.com', '_blank', '','');
+  //             break;
+  //          case 3: 
+  //             console.log('face 4');
+  //             // window.open('http://google.com', '_blank', '','');
+  //             break;
+  //          case 4: 
+  //             console.log('face 5');
+  //             // window.open('http://google.com', '_blank', '','');
+  //             break;
+  //          case 5: 
+  //             console.log('face 6');
+  //             // window.open('http://google.com', '_blank', '','');
+  //             break;
+  //           default: 
+  //             event.preventDefault();
+  //       }
+
+  //    }
+
+  event.preventDefault();
+
+  mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+  raycaster.setFromCamera( mouse, camera );
   var intersects = raycaster.intersectObject( cubeLink );
-  
-  var hex = Math.random() * 0xffffff;
 
-     if ( intersects.length > 0 ) {
-        var index = Math.floor( intersects[0].faceIndex / 2);
-        switch (index) {
-           case 0: 
-              console.log('face 1');
-              window.open('http://google.com', '_blank', '','');
-              break;
-           case 1:
-              console.log('face 2');
-              window.open('http://google.com', '_blank', '','');
-              break;
-           case 2:
-              console.log('face 3');
-              window.open('http://google.com', '_blank', '','');
-              break;
-           case 3: 
-              console.log('face 4');
-              window.open('http://google.com', '_blank', '','');
-              break;
-           case 4: 
-              console.log('face 5');
-              window.open('http://google.com', '_blank', '','');
-              break;
-           case 5: 
-              console.log('face 6');
-              window.open('http://google.com', '_blank', '','');
-              break;
-        }
-
-     }
+  if ( intersects.length > 0 ) {
+    var index = intersects[0].face.materialIndex;
+    switch (index) {
+       case 0: 
+          console.log('face 1');
+          // window.open('http://google.com', '_blank', '','');
+          break;
+       case 1:
+          console.log('face 2');
+          // window.open('http://google.com', '_blank', '','');
+          break;
+       case 2:
+          console.log('face 3');
+          // window.open('http://google.com', '_blank', '','');
+          break;
+       case 3: 
+          console.log('face 4');
+          // window.open('http://google.com', '_blank', '','');
+          break;
+       case 4: 
+          console.log('face 5');
+          // window.open('http://google.com', '_blank', '','');
+          break;
+       case 5: 
+          console.log('face 6');
+          // window.open('http://google.com', '_blank', '','');
+          break;
+        default: 
+          event.preventDefault();
+    }
+    // console.log(intersects[0].face.materialIndex);
+  }
 
   // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
