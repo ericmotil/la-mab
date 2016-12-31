@@ -193,27 +193,27 @@ function init() {
   //
   var img1 = new Image;
   img1.onload = function(){ ctx1.drawImage(img1, 0, 0); };
-  img1.src = 'images/cubeFace1.svg';
+  img1.src = 'images/cubeFace1.png';
 
   var img2 = new Image;
   img2.onload = function(){ ctx2.drawImage(img2, 0, 0); };
-  img2.src = 'images/cubeFace2.svg';
+  img2.src = 'images/cubeFace1.png';
 
   var img3 = new Image;
   img3.onload = function(){ ctx3.drawImage(img3, 0, 0); };
-  img3.src = 'images/cubeFace3.svg';
+  img3.src = 'images/cubeFace1.png';
 
   var img4 = new Image;
   img4.onload = function(){ ctx4.drawImage(img4, 0, 0); };
-  img4.src = 'images/cubeFace4.svg';
+  img4.src = 'images/cubeFace1.png';
 
   var img5 = new Image;
   img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
-  img5.src = 'images/cubeFace5.svg';
+  img5.src = 'images/cubeFace1.png';
 
   var img6 = new Image;
   img6.onload = function(){ ctx6.drawImage(img6, 0, 0); };
-  img6.src = 'images/cubeFace6.svg';
+  img6.src = 'images/cubeFace1.png';
 
 
 
@@ -434,8 +434,8 @@ function onDocumentMouseDown( event ) {
 
 function onDocumentMouseMove( event ) {
 
-  mouseX = ( event.clientX - windowHalfX ) * 0.05;
-  mouseY = ( event.clientY - windowHalfY ) * 0.05;
+  mouseX = ( event.clientX - windowHalfX ) * 0.02;
+  mouseY = ( event.clientY - windowHalfY ) * 0.02;
 
   targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
   targetRotationY = targetRotationYOnMouseDown + ( mouseY - mouseYOnMouseDown ) * 0.02;
