@@ -78,14 +78,14 @@ function init() {
   // skybox
   //
   var skyboxImgPath = 'images/bg/';
-  var skyboxImgFormat = '.png';
+  var skyboxImgFormat = '.jpg';
   var skyboxUrls = [
-    skyboxImgPath + 'dawnmountain-xpos' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-xneg' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-ypos' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-yneg' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-zpos' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-zneg' + skyboxImgFormat
+    skyboxImgPath + 'xpos' + skyboxImgFormat,
+    skyboxImgPath + 'xneg' + skyboxImgFormat,
+    skyboxImgPath + 'ypos' + skyboxImgFormat,
+    skyboxImgPath + 'yneg' + skyboxImgFormat,
+    skyboxImgPath + 'zpos' + skyboxImgFormat,
+    skyboxImgPath + 'zneg' + skyboxImgFormat
   ];
 
 
@@ -390,43 +390,45 @@ function onDocumentMouseDown( event ) {
     switch (index) {
        case 0: 
           console.log('face 1');
-          // window.open('http://google.com', '_blank', '','');
+          window.open('http://google.com', '_blank', '','');
           break;
        case 1:
           console.log('face 2');
-          // window.open('http://google.com', '_blank', '','');
+          window.open('http://google.com', '_blank', '','');
           break;
        case 2:
           console.log('face 3');
-          // window.open('http://google.com', '_blank', '','');
+          window.open('http://google.com', '_blank', '','');
           break;
        case 3: 
           console.log('face 4');
-          // window.open('http://google.com', '_blank', '','');
+          window.open('http://google.com', '_blank', '','');
           break;
        case 4: 
           console.log('face 5');
-          // window.open('http://google.com', '_blank', '','');
+          window.open('http://google.com', '_blank', '','');
           break;
        case 5: 
           console.log('face 6');
-          // window.open('http://google.com', '_blank', '','');
+          window.open('http://google.com', '_blank', '','');
           break;
         default: 
           event.preventDefault();
     }
+    // log index of cubeface that is clicked
     // console.log(intersects[0].face.materialIndex);
   }
 
+
   // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-  document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-  document.addEventListener( 'mouseout', onDocumentMouseOut, false );
+  // document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+  // document.addEventListener( 'mouseout', onDocumentMouseOut, false );
 
   mouseXOnMouseDown = event.clientX - windowHalfX;
   mouseYOnMouseDown = event.clientY - windowHalfY;
 
-  targetRotationOnMouseDown = targetRotation;
-  targetRotationYOnMouseDown = targetRotationY;  
+  // targetRotationOnMouseDown = targetRotation;
+  // targetRotationYOnMouseDown = targetRotationY;  
 }
 
 
