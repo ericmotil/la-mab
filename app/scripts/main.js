@@ -192,36 +192,36 @@ function init() {
   //
   var img1 = new Image;
   img1.crossOrigin = 'anonymous';
-  img1.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
+  img1.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
   img1.onload = function(){ ctx1.drawImage(img1, 0, 0); };
 
 
   var img2 = new Image;
   img2.crossOrigin = 'anonymous';
-  img2.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
+  img2.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
   img2.onload = function(){ ctx2.drawImage(img2, 0, 0); };
   
 
   var img3 = new Image;
   img3.crossOrigin = 'anonymous';
-  img3.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
+  img3.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
   img3.onload = function(){ ctx3.drawImage(img3, 0, 0); };
   
 
   var img4 = new Image;
   img4.crossOrigin = 'anonymous';
-  img4.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
+  img4.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
   img4.onload = function(){ ctx4.drawImage(img4, 0, 0); };
 
   var img5 = new Image;
   img5.crossOrigin = 'anonymous';
-  img5.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
+  img5.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
   img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
   
 
   var img6 = new Image;
   img6.crossOrigin = 'anonymous';
-  img6.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
+  img6.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
   img6.onload = function(){ ctx6.drawImage(img6, 0, 0); };
   
 
@@ -267,7 +267,7 @@ function init() {
 
 
   // cube geometry
-  var cubeLinkGeometry = new THREE.CubeGeometry(cubeSize + 1, cubeSize + 1, cubeSize + 1);
+  var cubeLinkGeometry = new THREE.CubeGeometry(cubeSize + 10, cubeSize + 10, cubeSize + 10);
 
   // compile cube faces
   var cubeLinkMaterials = [ 
