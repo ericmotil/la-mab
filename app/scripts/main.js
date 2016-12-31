@@ -77,20 +77,16 @@ function init() {
 
   // skybox
   //
-  var skyboxImgPath = 'http://ericmotil.com/la-mab/images/bg/';
-  var skyboxImgFormat = '.jpg';
+  var skyboxImgPath = 'images/bg/';
+  var skyboxImgFormat = '.png';
   var skyboxUrls = [
-    skyboxImgPath + 'xpos' + skyboxImgFormat,
-    skyboxImgPath + 'xneg' + skyboxImgFormat,
-    skyboxImgPath + 'ypos' + skyboxImgFormat,
-    skyboxImgPath + 'yneg' + skyboxImgFormat,
-    skyboxImgPath + 'zpos' + skyboxImgFormat,
-    skyboxImgPath + 'zneg' + skyboxImgFormat
+    skyboxImgPath + 'dawnmountain-xpos' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-xneg' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-ypos' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-yneg' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-zpos' + skyboxImgFormat,
+    skyboxImgPath + 'dawnmountain-zneg' + skyboxImgFormat
   ];
-
-  var img1 = new Image;
-  img1.crossOrigin = 'anonymous';
-  img1.src = 'images/cubeFace1.png';
 
   // skybox with refraction mapping
   //
