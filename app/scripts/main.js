@@ -310,12 +310,7 @@ function onWindowResize() {
 }
 
 
-
-
-function onDocumentMouseDown( event ) {  
-  event.preventDefault();
-
-
+function raycastFaces(){
   // set upraycaster mouse position
   //
   mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
@@ -361,6 +356,11 @@ function onDocumentMouseDown( event ) {
   }
 }
 
+function onDocumentMouseDown( event ) {  
+  event.preventDefault();
+  raycastFaces();
+}
+
 
 
 
@@ -391,7 +391,10 @@ function onDocumentMouseMove( event ) {
 
 }
 
-function onDocumentTouchStart( event ) { }
+function onDocumentTouchStart( event ) {
+  raycastFaces();
+}
+
 function onDocumentTouchMove( event ) {
   if ( event.touches.length === 1 ) {
     event.preventDefault();
