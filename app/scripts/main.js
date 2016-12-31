@@ -267,7 +267,7 @@ function init() {
 
 
   // cube geometry
-  var cubeLinkGeometry = new THREE.CubeGeometry(cubeSize + 9, cubeSize + 9, cubeSize + 9);
+  var cubeLinkGeometry = new THREE.CubeGeometry(cubeSize + 10, cubeSize + 10, cubeSize + 10);
 
   // compile cube faces
   var cubeLinkMaterials = [ 
