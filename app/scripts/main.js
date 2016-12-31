@@ -77,7 +77,7 @@ function init() {
 
   // skybox
   //
-  var skyboxImgPath = 'images/bg/';
+  var skyboxImgPath = 'http://ericmotil.com/la-mab/images/bg/';
   var skyboxImgFormat = '.jpg';
   var skyboxUrls = [
     skyboxImgPath + 'xpos' + skyboxImgFormat,
@@ -88,6 +88,9 @@ function init() {
     skyboxImgPath + 'zneg' + skyboxImgFormat
   ];
 
+  var img1 = new Image;
+  img1.crossOrigin = 'anonymous';
+  img1.src = 'images/cubeFace1.png';
 
   // skybox with refraction mapping
   //
@@ -120,7 +123,7 @@ function init() {
 
   // skybox by mapping sides of cube
   // doesnt allow for refraction mapping
-  //
+  
   // var imagePrefix = 'images/bg/';
   // var directions  = ['xpos', 'xneg', 'ypos', 'yneg', 'zpos', 'zneg'];
   // var imageSuffix = '.png';
@@ -192,28 +195,39 @@ function init() {
   // choose images for different canvases
   //
   var img1 = new Image;
+  img1.crossOrigin = 'anonymous';
+  img1.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
   img1.onload = function(){ ctx1.drawImage(img1, 0, 0); };
-  img1.src = 'images/cubeFace1.png';
+
 
   var img2 = new Image;
+  img2.crossOrigin = 'anonymous';
+  img2.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
   img2.onload = function(){ ctx2.drawImage(img2, 0, 0); };
-  img2.src = 'images/cubeFace1.png';
+  
 
   var img3 = new Image;
+  img3.crossOrigin = 'anonymous';
+  img3.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
   img3.onload = function(){ ctx3.drawImage(img3, 0, 0); };
-  img3.src = 'images/cubeFace1.png';
+  
 
   var img4 = new Image;
+  img4.crossOrigin = 'anonymous';
+  img4.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
   img4.onload = function(){ ctx4.drawImage(img4, 0, 0); };
-  img4.src = 'images/cubeFace1.png';
 
   var img5 = new Image;
+  img5.crossOrigin = 'anonymous';
+  img5.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
   img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
-  img5.src = 'images/cubeFace1.png';
+  
 
   var img6 = new Image;
+  img6.crossOrigin = 'anonymous';
+  img6.src = 'http://ericmotil.com/la-mab/images/cubeFace1.png';
   img6.onload = function(){ ctx6.drawImage(img6, 0, 0); };
-  img6.src = 'images/cubeFace1.png';
+  
 
 
 
