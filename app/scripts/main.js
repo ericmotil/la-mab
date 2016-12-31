@@ -1,39 +1,25 @@
 // standard global vars
 var container, scene, camera, renderer, controls, stats;
 
-
 // cubes
 var cube;
 var cubeLink;
 
+// utils
 var raycaster;
-
-var targetRotation = 0;
-var targetRotationOnMouseDown = 0;
-
-var targetRotationY = 0;
-var targetRotationYOnMouseDown = 0;
-
 var mouse;
-var mouseX = 0;
-var mouseY = 0;
-var mouseXOnMouseDown = 0;
-var mouseYOnMouseDown = 0;
+var mouseCameraX = 0;
+var mouseCameraY = 0;
 
-
+// window
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
-
-
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
 
-
 init();
 animate();
-
-
 
 
 function init() {
@@ -62,6 +48,20 @@ function init() {
   container.appendChild( renderer.domElement );
 
 
+
+  // info html
+  //
+  // var info = document.createElement( 'div' );
+  // info.style.position = 'absolute';
+  // info.style.bottom = '10px';
+  // info.style.width = '100%';
+  // info.style.textAlign = 'center';
+  // info.style.color = 'white';
+  // info.innerHTML = '<a style="color: white;"href="http://threejs.org" target="_blank">link to thing</a>';
+  // container.appendChild( info );
+
+
+
   // lights
   //
   var light = new THREE.PointLight(0xffffff);
@@ -78,18 +78,17 @@ function init() {
   // skybox
   //
   var skyboxImgPath = 'images/bg/';
-  var skyboxImgFormat = '.png';
+  var skyboxImgFormat = '.jpg';
   var skyboxUrls = [
-    skyboxImgPath + 'dawnmountain-xpos' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-xneg' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-ypos' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-yneg' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-zpos' + skyboxImgFormat,
-    skyboxImgPath + 'dawnmountain-zneg' + skyboxImgFormat
+    skyboxImgPath + 'another-xpos' + skyboxImgFormat,
+    skyboxImgPath + 'another-xneg' + skyboxImgFormat,
+    skyboxImgPath + 'another-ypos' + skyboxImgFormat,
+    skyboxImgPath + 'another-yneg' + skyboxImgFormat,
+    skyboxImgPath + 'another-zpos' + skyboxImgFormat,
+    skyboxImgPath + 'another-zneg' + skyboxImgFormat
   ];
 
   // skybox with refraction mapping
-  //
   var skyboxTexture = new THREE.CubeTextureLoader().load( skyboxUrls );
   skyboxTexture.format = THREE.RGBFormat;
   skyboxTexture.mapping = THREE.CubeRefractionMapping;
@@ -113,43 +112,16 @@ function init() {
   var skybox = new THREE.Mesh( skyboxGeometry, skyboxMaterial );
   scene.add( skybox );
 
-
-
-
-
-  // skybox by mapping sides of cube
-  // doesnt allow for refraction mapping
   
-  // var imagePrefix = 'images/bg/';
-  // var directions  = ['xpos', 'xneg', 'ypos', 'yneg', 'zpos', 'zneg'];
-  // var imageSuffix = '.png';
-
-  // var skyGeometry = new THREE.CubeGeometry( 500, 500, 500 );
-
-  // var materialArray = [];
-  // for (var i = 0; i < 6; i++)
-  //   materialArray.push( new THREE.MeshBasicMaterial({
-  //     map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
-  //     side: THREE.BackSide
-  //   }));
-
-  // var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-  // var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
-  // scene.add( skyBox );
-  
-
-
 
   // cubes
   //
-  // ensures both cubes are same size
-  var cubeSize = 25;
+  // ensure both cubes are same size and power of 2
+  var cubeSize = 30;
   var canvasHeight = 512,
       canvasWidth = 512;
 
-  
   // make canvases
-  //
   var canvas1 = document.createElement('canvas'),
       canvas2 = document.createElement('canvas'),
       canvas3 = document.createElement('canvas'),
@@ -157,8 +129,7 @@ function init() {
       canvas5 = document.createElement('canvas'),
       canvas6 = document.createElement('canvas');
   
-  // set canvas sizes
-  //
+  // set canvas size
   canvas1.width = canvasHeight;
   canvas1.height = canvasWidth;
 
@@ -179,7 +150,6 @@ function init() {
 
 
   // make canvas context
-  //
   var ctx1 = canvas1.getContext('2d'),
       ctx2 = canvas2.getContext('2d'),
       ctx3 = canvas3.getContext('2d'),
@@ -189,42 +159,37 @@ function init() {
 
 
   // choose images for different canvases
-  //
   var img1 = new Image;
+  // set cross origin becuase webGL doesnt like if you dont when using canvas
   img1.crossOrigin = 'anonymous';
   img1.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
   img1.onload = function(){ ctx1.drawImage(img1, 0, 0); };
 
-
   var img2 = new Image;
   img2.crossOrigin = 'anonymous';
-  img2.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
+  img2.src = 'http://ericmotil.com/la-mab/images/cubeFace2.svg';
   img2.onload = function(){ ctx2.drawImage(img2, 0, 0); };
   
-
   var img3 = new Image;
   img3.crossOrigin = 'anonymous';
-  img3.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
+  img3.src = 'http://ericmotil.com/la-mab/images/cubeFace3.svg';
   img3.onload = function(){ ctx3.drawImage(img3, 0, 0); };
   
-
   var img4 = new Image;
   img4.crossOrigin = 'anonymous';
-  img4.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
+  img4.src = 'http://ericmotil.com/la-mab/images/cubeFace4.svg';
   img4.onload = function(){ ctx4.drawImage(img4, 0, 0); };
 
   var img5 = new Image;
   img5.crossOrigin = 'anonymous';
-  img5.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
+  img5.src = 'http://ericmotil.com/la-mab/images/cubeFace5.svg';
   img5.onload = function(){ ctx5.drawImage(img5, 0, 0); };
   
-
   var img6 = new Image;
   img6.crossOrigin = 'anonymous';
-  img6.src = 'http://ericmotil.com/la-mab/images/cubeFace1.svg';
+  img6.src = 'http://ericmotil.com/la-mab/images/cubeFace6.svg';
   img6.onload = function(){ ctx6.drawImage(img6, 0, 0); };
   
-
 
 
   // make cube faces
@@ -279,7 +244,7 @@ function init() {
       cubeFace6
   ]; 
 
-  // make cube
+  // build cube
   var cubeLinkMaterial = new THREE.MultiMaterial(cubeLinkMaterials); 
   cubeLink = new THREE.Mesh(cubeLinkGeometry, cubeLinkMaterial);
 
@@ -307,18 +272,24 @@ function init() {
 
   // create cube mesh
   cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-  // center
+  // position in center
   cube.position.set(0, 0, 0);
   // add cube to scene
   scene.add( cube );
 
+
+
+  // create raycaster for scene
   raycaster = new THREE.Raycaster();
+  // create mouse for raycaster
   mouse = new THREE.Vector2();
 
 
   // event listeners
   window.addEventListener( 'resize', onWindowResize, false );
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
+  // events for moving
   document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   document.addEventListener( 'touchstart', onDocumentTouchStart, false );
   document.addEventListener( 'touchmove', onDocumentTouchMove, false );
@@ -326,7 +297,6 @@ function init() {
 }
 
 
-window.addEventListener( 'resize', onWindowResize, false );
 
 function onWindowResize() {
 
@@ -343,58 +313,19 @@ function onWindowResize() {
 
 
 function onDocumentMouseDown( event ) {  
-  // var vector = new THREE.Vector3((event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
-  // vector.unproject( camera );
-  
-  // var raycaster = new THREE.Raycaster();   
-  // // raycaster.set(camera.position, vector.sub( camera.position ).normalize());
-  // raycaster.setFromCamera( mouse, camera );
-
-  // var intersects = raycaster.intersectObject( cubeLink );
-  
-  // var hex = Math.random() * 0xffffff;
-
-  //    if ( intersects.length > 0 ) {
-  //       var index = Math.floor( intersects[0].faceIndex / 2);
-  //       switch (index) {
-  //          case 0: 
-  //             console.log('face 1');
-  //             // window.open('http://google.com', '_blank', '','');
-  //             break;
-  //          case 1:
-  //             console.log('face 2');
-  //             // window.open('http://google.com', '_blank', '','');
-  //             break;
-  //          case 2:
-  //             console.log('face 3');
-  //             // window.open('http://google.com', '_blank', '','');
-  //             break;
-  //          case 3: 
-  //             console.log('face 4');
-  //             // window.open('http://google.com', '_blank', '','');
-  //             break;
-  //          case 4: 
-  //             console.log('face 5');
-  //             // window.open('http://google.com', '_blank', '','');
-  //             break;
-  //          case 5: 
-  //             console.log('face 6');
-  //             // window.open('http://google.com', '_blank', '','');
-  //             break;
-  //           default: 
-  //             event.preventDefault();
-  //       }
-
-  //    }
-
   event.preventDefault();
 
+
+  // set upraycaster mouse position
+  //
   mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
   mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-
+  // place raycaster
   raycaster.setFromCamera( mouse, camera );
   var intersects = raycaster.intersectObject( cubeLink );
 
+  // set url for each cubeface
+  //
   if ( intersects.length > 0 ) {
     var index = intersects[0].face.materialIndex;
     switch (index) {
@@ -428,93 +359,115 @@ function onDocumentMouseDown( event ) {
     // log index of cubeface that is clicked
     // console.log(intersects[0].face.materialIndex);
   }
-
-
-  // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-  // document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-  // document.addEventListener( 'mouseout', onDocumentMouseOut, false );
-
-  mouseXOnMouseDown = event.clientX - windowHalfX;
-  mouseYOnMouseDown = event.clientY - windowHalfY;
-
-  // targetRotationOnMouseDown = targetRotation;
-  // targetRotationYOnMouseDown = targetRotationY;  
 }
+
+
+
 
 
 function onDocumentMouseMove( event ) {
 
-  mouseX = ( event.clientX - windowHalfX ) * 0.02;
-  mouseY = ( event.clientY - windowHalfY ) * 0.02;
+  // set upraycaster mouse position
+  //
+  mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+  // raycast from camera with mouse poistion
+  raycaster.setFromCamera( mouse, camera );
+  // define object to watch
+  var intersects = raycaster.intersectObject( cubeLink );
+  if ( intersects.length > 0 ) {
+    document.body.style.cursor = "pointer";
+    // console.log('intersected');
+  } else {
+    document.body.style.cursor = "move";
+    // console.log('not intersected');
+  }
 
-  targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
-  targetRotationY = targetRotationYOnMouseDown + ( mouseY - mouseYOnMouseDown ) * 0.02;
-}
-function onDocumentMouseUp( event ) {
-  document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-  document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
-}
-function onDocumentMouseOut( event ) {
-  document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
-  document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
-}
-function onDocumentTouchStart( event ) {
 
-  // if ( event.touches.length === 1 ) {
-  //   event.preventDefault();
-  //   mouseXOnMouseDown = ( event.touches[ 0 ].pageX - windowHalfX) * 0.05;
-  //   mouseYOnMouseDown = ( event.touches[ 0 ].pageY - windowHalfY) * 0.05;
-  //   targetRotationOnMouseDown = targetRotation;
-  //   targetRotationYOnMouseDown = targetRotationY;
-  // }
+  // detect mouse position distance for camera movement
+  //
+  mouseCameraX = ( event.clientX - windowHalfX ) * 0.05;
+  mouseCameraY = ( event.clientY - windowHalfY ) * 0.05;
 
-  event.preventDefault();
-  event.clientX = event.touches[0].clientX;
-  event.clientY = event.touches[0].clientY;
-  onDocumentMouseDown( event );
 }
+
+function onDocumentTouchStart( event ) { }
 function onDocumentTouchMove( event ) {
-
   if ( event.touches.length === 1 ) {
-
     event.preventDefault();
-
-
-    // move camera
-    mouseX = ( event.touches[ 0 ].pageX - windowHalfX) * 0.5;
-    mouseY = ( event.touches[ 0 ].pageY - windowHalfY) * 0.5;
-
-    // move object
-    targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.2;
-    targetRotationY = targetRotationYOnMouseDown + ( mouseY - mouseYOnMouseDown ) * 0.2;
-
   }
 }
+
+
+
 
 function animate() {
 
   requestAnimationFrame( animate );
   render();
 
-  camera.position.x += ( mouseX / 2  - camera.position.x) * 0.02;
-  camera.position.y += ( - mouseY / 2   - camera.position.y) * 0.02;
 }
+
+
+
 
 
 function render() {
 
+  // render my beautiful scene
   renderer.render( scene, camera );
 
 
-  cube.rotation.x += 0.05;
-  cube.rotation.y += 0.05;
+  // update camera position based off mouse movement
+  //
+  camera.position.x += ( mouseCameraX - camera.position.x ) * 0.015;
+  camera.position.y += ( - mouseCameraY - camera.position.y ) * 0.015;
+ 
+  
 
-  cubeLink.rotation.x += 0.05;
-  cubeLink.rotation.y += 0.05;
+  // constantly rotate refracting cube
+  //
+  cube.rotation.x += 0.015;
+  cube.rotation.y += 0.015;
+  // rotate inner link cube at same speed
+  cubeLink.rotation.x += 0.015;
+  cubeLink.rotation.y += 0.015;
 
-  cube.rotation.y += ( targetRotationY - cube.rotation.y ) * 0.005;
-  cube.rotation.x += ( targetRotation - cube.rotation.x ) * 0.005;
-
-  cubeLink.rotation.y += ( targetRotationY - cubeLink.rotation.y ) * 0.005;
-  cubeLink.rotation.x += ( targetRotation - cubeLink.rotation.x ) * 0.005;
 }
+
+
+
+
+
+
+
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("btn-overlay");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+modal.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+

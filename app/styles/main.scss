@@ -1,6 +1,9 @@
 // bower:scss
 // endbower
 
+* {
+	box-sizing: border-box;
+}
 body, canvas {
   background: black;
   height: 100%;
@@ -9,7 +12,88 @@ body, canvas {
   padding: 0;
 }
 
-.three-div {
-	background: green;
-	width: 100px;
+
+
+.link {
+	position: absolute;
+	display: block;
+	color: white;
+	text-decoration: none;
+}
+
+
+.link-top {
+	top: 20px;
+	left: 50%;
+}
+
+.link-right {
+	top: 50%;
+	right: 20px;
+	transform: rotate(90deg);
+}
+
+.link-bottom {
+	bottom: 20px;
+	left: 50%;
+}
+
+.link-left {
+	top: 50%;
+	left: 20px;
+	transform: rotate(-90deg);
+}
+
+
+
+#btn-overlay {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	height: 80px;
+	width: 80px;
+
+
+	border: none;
+	background: white;
+	font-family: monospace;
+
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 0 auto;
+    margin-top: 10vh;
+    padding: 30px 40px;
+    width: 80vw;
+    height: 80vh;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
