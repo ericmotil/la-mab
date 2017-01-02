@@ -543,10 +543,10 @@ function initAudioPlayer(){
   function playPause(){
     if(audio.paused){
         audio.play();
-        playbtn.style.background = 'url(images/pause-button.png) no-repeat';
+        playbtn.style.background = 'url(http://ericmotil.com/la-mab/images/pause-button.png) no-repeat';
       } else {
         audio.pause();
-        playbtn.style.background = 'url(images/play-button.png) no-repeat';
+        playbtn.style.background = 'url(http://ericmotil.com/la-mab/images/play-button.png) no-repeat';
       }
   }
   // function mute(){
