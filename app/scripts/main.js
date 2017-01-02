@@ -313,8 +313,6 @@ function onWindowResize() {
 function raycastFaces(){
   // set upraycaster mouse position
   //
-  mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-  mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
   // place raycaster
   raycaster.setFromCamera( mouse, camera );
   var intersects = raycaster.intersectObject( cubeLink );
@@ -358,6 +356,8 @@ function raycastFaces(){
 
 function onDocumentMouseDown( event ) {  
   event.preventDefault();
+  mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
   raycastFaces();
 }
 
@@ -392,6 +392,8 @@ function onDocumentMouseMove( event ) {
 }
 
 function onDocumentTouchStart( event ) {
+  mouse.x = +(event.touches[0].pageX / window.innerWidth) * 2 +-1;
+  mouse.y = -(event.touches[0].pageY / window.innerHeight) * 2 + 1;
   raycastFaces();
 }
 
