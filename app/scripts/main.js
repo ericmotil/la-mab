@@ -18,6 +18,19 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
 
+// rotation vars
+var targetRotation = 0;
+var targetRotationOnMouseDown = 0;
+var targetRotationY = 0;
+var targetRotationYOnMouseDown = 0;
+var mouseX = 0;
+var mouseY = 0;
+var mouseXOnMouseDown = 0;
+var mouseYOnMouseDown = 0;
+
+
+
+
 init();
 animate();
 
@@ -80,12 +93,12 @@ function init() {
   var skyboxImgPath = 'images/bg/';
   var skyboxImgFormat = '.jpg';
   var skyboxUrls = [
-    skyboxImgPath + 'another-xpos' + skyboxImgFormat,
-    skyboxImgPath + 'another-xneg' + skyboxImgFormat,
-    skyboxImgPath + 'another-ypos' + skyboxImgFormat,
-    skyboxImgPath + 'another-yneg' + skyboxImgFormat,
-    skyboxImgPath + 'another-zpos' + skyboxImgFormat,
-    skyboxImgPath + 'another-zneg' + skyboxImgFormat
+    skyboxImgPath + 'test2x-xpos' + skyboxImgFormat,
+    skyboxImgPath + 'test2x-xneg' + skyboxImgFormat,
+    skyboxImgPath + 'test2x-ypos' + skyboxImgFormat,
+    skyboxImgPath + 'test2x-yneg' + skyboxImgFormat,
+    skyboxImgPath + 'test2x-zpos' + skyboxImgFormat,
+    skyboxImgPath + 'test2x-zneg' + skyboxImgFormat
   ];
 
   // skybox with refraction mapping
@@ -94,7 +107,7 @@ function init() {
   skyboxTexture.mapping = THREE.CubeRefractionMapping;
 
   // skybox geo
-  var skyboxGeometry = new THREE.BoxGeometry( 1000, 1000, 1000 );
+  var skyboxGeometry = new THREE.BoxGeometry( 1024, 1024, 1024 );
 
   // skybox shader
   var skyboxShader = THREE.ShaderLib[ 'cube' ];
@@ -324,27 +337,27 @@ function raycastFaces(){
     switch (index) {
        case 0: 
           console.log('face 1');
-          window.open('http://google.com', '_blank', '','');
+          window.open('http://twitter.com', '_blank', '','');
           break;
        case 1:
           console.log('face 2');
-          window.open('http://google.com', '_blank', '','');
+          window.open('http://facebook.com', '_blank', '','');
           break;
        case 2:
           console.log('face 3');
-          window.open('http://google.com', '_blank', '','');
+          window.open('http://instagram.com', '_blank', '','');
           break;
        case 3: 
           console.log('face 4');
-          window.open('http://google.com', '_blank', '','');
+          window.open('http://tumblr.com', '_blank', '','');
           break;
        case 4: 
           console.log('face 5');
-          window.open('http://google.com', '_blank', '','');
+          window.open('http://music.com', '_blank', '','');
           break;
        case 5: 
           console.log('face 6');
-          window.open('http://google.com', '_blank', '','');
+          window.open('http://shirts.com', '_blank', '','');
           break;
         default: 
           event.preventDefault();
@@ -359,6 +372,19 @@ function onDocumentMouseDown( event ) {
   mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
   mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
   raycastFaces();
+
+
+
+  // rotation for cubes
+  mouseXOnMouseDown = event.clientX - windowHalfX;
+
+  console.log('mouse x = ' + mouseXOnMouseDown);
+  console.log('target rotation = ' + targetRotationOnMouseDown);
+
+  mouseYOnMouseDown = event.clientY - windowHalfY;
+
+  targetRotationOnMouseDown = targetRotation;
+  targetRotationYOnMouseDown = targetRotationY;
 }
 
 
@@ -388,6 +414,15 @@ function onDocumentMouseMove( event ) {
   //
   mouseCameraX = ( event.clientX - windowHalfX ) * 0.05;
   mouseCameraY = ( event.clientY - windowHalfY ) * 0.05;
+
+
+
+  // rotation
+  //
+  mouseX = ( event.clientX - windowHalfX ) * 0.05;
+  mouseY = ( event.clientY - windowHalfY ) * 0.05;
+  targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
+  targetRotationY = targetRotationYOnMouseDown + ( mouseY - mouseYOnMouseDown ) * 0.02;
 
 }
 
@@ -438,6 +473,14 @@ function render() {
   cubeLink.rotation.x += 0.015;
   cubeLink.rotation.y += 0.015;
 
+
+  // cube spins
+  cube.rotation.y += ( targetRotationY - cube.rotation.y ) * 0.005;
+  cube.rotation.x += ( targetRotation - cube.rotation.x ) * 0.005;
+
+  cubeLink.rotation.y += ( targetRotationY - cubeLink.rotation.y ) * 0.005;
+  cubeLink.rotation.x += ( targetRotation - cubeLink.rotation.x ) * 0.005;
+
 }
 
 
@@ -445,7 +488,8 @@ function render() {
 
 
 
-
+// modal content
+//
 // Get the modal
 var modal = document.getElementById('myModal');
 
@@ -475,4 +519,45 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 }
+
+
+
+
+
+
+// audio
+//
+var audio, playbtn, mutebtn, seek_bar;
+function initAudioPlayer(){
+  audio = new Audio();
+  audio.src = "audio/gone.mp3";
+  audio.loop = true;
+  audio.play();
+  // Set object references
+  playbtn = document.getElementById("playpausebtn");
+  mutebtn = document.getElementById("mutebtn");
+  // Add Event Handling
+  playbtn.addEventListener("click",playPause);
+  // mutebtn.addEventListener("click", mute);
+  // Functions
+  function playPause(){
+    if(audio.paused){
+        audio.play();
+        playbtn.style.background = "url(images/pause-button.png) no-repeat";
+      } else {
+        audio.pause();
+        playbtn.style.background = "url(images/play-button.png) no-repeat";
+      }
+  }
+  // function mute(){
+  //   if(audio.muted){
+  //       audio.muted = false;
+  //       mutebtn.style.background = "url(images/speaker.png) no-repeat";
+  //     } else {
+  //       audio.muted = true;
+  //       mutebtn.style.background = "url(images/speaker_muted.png) no-repeat";
+  //     }
+  // }
+}
+window.addEventListener("load", initAudioPlayer);
 
