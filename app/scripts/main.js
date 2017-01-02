@@ -78,7 +78,7 @@ function init() {
   // lights
   //
   var light = new THREE.PointLight(0xffffff);
-  light.position.set( 0, 500, 0 );
+  light.position.set( 100, 100, 100 );
   scene.add(light);
 
 
@@ -280,7 +280,7 @@ function init() {
     envMap: skyboxTexture,
     // controlls the amount of rrefraction of background
     // lower more distored, high clearer
-    refractionRatio: 0.85
+    refractionRatio: 0.9
   });
 
   // create cube mesh
@@ -530,23 +530,23 @@ window.onclick = function(event) {
 var audio, playbtn, mutebtn, seek_bar;
 function initAudioPlayer(){
   audio = new Audio();
-  audio.src = "audio/gone.mp3";
+  audio.src = 'audio/gone.mp3';
   audio.loop = true;
   audio.play();
   // Set object references
-  playbtn = document.getElementById("playpausebtn");
-  mutebtn = document.getElementById("mutebtn");
+  playbtn = document.getElementById('playpausebtn');
+  mutebtn = document.getElementById('mutebtn');
   // Add Event Handling
-  playbtn.addEventListener("click",playPause);
+  playbtn.addEventListener('click',playPause);
   // mutebtn.addEventListener("click", mute);
   // Functions
   function playPause(){
     if(audio.paused){
         audio.play();
-        playbtn.style.background = "url(images/pause-button.png) no-repeat";
+        playbtn.style.background = 'url(images/pause-button.png) no-repeat';
       } else {
         audio.pause();
-        playbtn.style.background = "url(images/play-button.png) no-repeat";
+        playbtn.style.background = 'url(images/play-button.png) no-repeat';
       }
   }
   // function mute(){
@@ -559,5 +559,5 @@ function initAudioPlayer(){
   //     }
   // }
 }
-window.addEventListener("load", initAudioPlayer);
+window.addEventListener('load', initAudioPlayer);
 
